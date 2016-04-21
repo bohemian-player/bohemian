@@ -1,8 +1,8 @@
 # Bohemian
 
-Bohemian is a command-line interface for playing music from [Rhapsody](http://www.rhapsody.com).
+Bohemian is a command-line interface for playing music from [Rhapsody](http://www.rhapsody.com). It allows you to play tracks on your local machine without the need for Rhapsody in the browser.
 
-To use this, **you must already be a Rhapsody subscriber** with full/unlimited access (currently known as the "[premier](http://www.rhapsody.com/pricing)" plan). This project does **not** allow you to do anything without a subscription account.
+NOTE: To use this, **you must already be a Rhapsody subscriber** with full/unlimited access (currently known as the "[premier](http://www.rhapsody.com/pricing)" plan). This project does **not** allow you to do anything without a subscription account.
 
 It works by following the requests made by the Rhapsody web client, fetching tracks with RTMPDump and sending the output to MPlayer.
 
@@ -18,11 +18,11 @@ At the moment, Bohemian is mostly a "proof of concept" as it only implements a b
 ## Installation
 
 1. Install the prerequisites. On OS X (with [Homebrew](http://brew.sh/)):
-	- `brew install node`
-	- `brew install mplayer`
-	- `brew install rtmpdump`
+  - `brew install node`
+  - `brew install mplayer`
+  - `brew install rtmpdump`
 2. Install Bohemian:
-	- `npm install -g bohemian`
+  - `npm install -g bohemian`
 
 ### To install as a library:
 

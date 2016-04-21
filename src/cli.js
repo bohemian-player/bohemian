@@ -30,7 +30,8 @@ const ARGS = [
     alias: 'i',
     type: Boolean,
     description:
-      'Interactive mode. Upon successful login, credentials are saved to ~/.bohemian/credentials.',
+      `Interactive mode. Upon successful login, credentials are saved to ~/.bohemian/credentials.
+      Use <left> and <right> arrow keys to seek within the currently playing track.`,
   }, {
     name: 'search',
     type: String,
@@ -42,12 +43,12 @@ const ARGS = [
     name: 'username',
     alias: 'u',
     type: String,
-    description: 'Rhapsody username',
+    description: 'Rhapsody username (defaults to saved credentials if not provided)',
   }, {
     name: 'password',
     alias: 'p',
     type: String,
-    description: 'Rhapsody password',
+    description: 'Rhapsody password (defaults to saved credentials if not provided)',
   }, {
     name: 'help',
     alias: 'h',

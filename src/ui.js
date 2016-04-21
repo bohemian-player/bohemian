@@ -58,7 +58,7 @@ export default class UI {
   registerListeners() {
     process.stdin.on('keypress', (ch, key) => {
       if (key && key.ctrl && key.name === 'c') {
-        return this.quit();
+        return process.exit(0);
       }
       if (key && key.name === 'right') {
         this.player.seekRelative(SEEK_AMOUNT);
@@ -83,7 +83,7 @@ export default class UI {
         choices: [{ name: 'Play/Pause', value: 'playPause' }].concat(MAIN_QUESTION.choices),
       });
     }
-    return inquirer.prompt([question]).then((answers) => this[answers.menuselect]());
+    return inquirer.prompt([question]).then(answers => this[answers.menuselect]());
   }
 
   showTrackList(tracks) {
@@ -93,13 +93,21 @@ export default class UI {
     }));
 
     const questions = {
-      choices,
+      choices: choices.concat([
+        { name: '< Back', value: '' },
+      ]),
       type: 'list',
       name: 'track',
       message: 'Which track:',
     };
 
-    return inquirer.prompt(questions).then((answers) => this.playTrack(answers.track));
+    return inquirer.prompt(questions).then(answers => {
+      if (answers.track.length <= 0) {
+        clear();
+        return this.main();
+      }
+      return this.playTrack(answers.track);
+    });
   }
 
   showArtistList(artists) {
@@ -109,15 +117,21 @@ export default class UI {
     }));
 
     const questions = {
-      choices,
+      choices: choices.concat([
+        { name: '< Back', value: '' },
+      ]),
       type: 'list',
       name: 'artist',
       message: 'Which artist:',
     };
 
-    return inquirer.prompt(questions).then((answers) => {
+    return inquirer.prompt(questions).then(answers => {
+      if (answers.artist.length <= 0) {
+        clear();
+        return this.main();
+      }
       process.stdout.write('Fetching songs for artist...\n');
-      this.client.getArtist(answers.artist).then((results) => {
+      return this.client.getArtist(answers.artist).then(results => {
         clear();
         return this.showTrackList(results);
       });
@@ -126,7 +140,7 @@ export default class UI {
 
   search() {
     return inquirer.prompt(SEARCH_QUESTIONS)
-      .then((answers) => {
+      .then(answers => {
         if (answers.artist.length > 0 || answers.track.length > 0) {
           if (answers.track.length > 0) {
             return this.searchTrack(answers.artist, answers.track);
@@ -142,7 +156,7 @@ export default class UI {
   searchTrack(artist, track) {
     const searchTerm =
       [artist, track].filter((t) => (t.length > 0)).join(' - ');
-    return this.client.search('track', searchTerm).then((results) => {
+    return this.client.search('track', searchTerm).then(results => {
       if (results.length <= 0) {
         clear();
         process.stdout.write('No matching tracks.\n');
@@ -168,7 +182,7 @@ export default class UI {
       process.stdout.write('You must supply an artist name.\n');
       return this.main();
     }
-    return this.client.search('artist', artist).then((results) => {
+    return this.client.search('artist', artist).then(results => {
       if (results.length <= 0) {
         clear();
         process.stdout.write('No matching artists.\n');
@@ -178,7 +192,7 @@ export default class UI {
       const normalizedArtist = results.length > 0 ? results[0].name.toLowerCase() : '';
       if (normalizedArtist === normalizedArtistTerm) {
         return this.client.getArtist(results[0].id)
-          .then((artistTracks) => {
+          .then(artistTracks => {
             clear();
             return this.showTrackList(artistTracks);
           });
@@ -194,7 +208,7 @@ export default class UI {
         clear();
         process.stdout.write('Playing track...\n');
         return new Promise((success) => {
-          setTimeout(() => success(this.main()), 2000);
+          setTimeout(() => this.main().then(success), 2000);
         });
       });
   }
@@ -219,17 +233,19 @@ export default class UI {
     return this.getSavedCredentials()
       .then(json => this.tryLogin(json),
         () => inquirer.prompt(LOGIN_QUESTIONS).then(answers => this.tryLogin(answers)))
-      .catch(() => this.quit());
+      .catch(error => {
+        process.stdout.write(`${error}\n`);
+        return this.quit();
+      });
   }
 
   tryLogin({ username, password }) {
     clear();
     return this.client.doLogin(username, password)
-      .then((authInfo) => (
-        fsp.ensureDir(this.configDir)
+      .then(authInfo => fsp.ensureDir(this.configDir)
           .then(() => fsp.writeJson(this.credentialsFile, authInfo.credentials))
           .then(() => this.main())
-      ), (error) => {
+      , (error) => {
         process.stdout.write(`Login failed: ${error}\n`);
         setTimeout(
           () => inquirer.prompt(LOGIN_QUESTIONS).then(answers => this.tryLogin(answers))
@@ -246,11 +262,6 @@ export default class UI {
   }
 
   quit() {
-    return this.player.cleanup().then(() => {
-      process.exit(0);
-    }, (error) => {
-      process.stdout.write(`${error}\n`);
-      process.exit(1);
-    });
+    this.player.cleanup().then(() => process.exit(0));
   }
 }

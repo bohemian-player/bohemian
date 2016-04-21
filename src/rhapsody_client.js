@@ -136,6 +136,11 @@ export default class RhapsodyClient {
     return fetch([this.playbackSession({ path: ['track', trackId] }), query].join('?'), { headers })
       .then((res) => (res.json()))
       .then((track) => {
+        if (track.errors) {
+          throw new Error(track.errors[0].description);
+        } else if (!track.stationTrack || !track.stationTrack.medias) {
+          throw new Error('Unable to load track!');
+        }
         // Prefer higher bitrates, then look for preferred formats
         const selectedMedia = track.stationTrack.medias.sort((a, b) => {
           const bitrateDiff = parseInt(a.bitrate, 10) - parseInt(b.bitrate, 10);
