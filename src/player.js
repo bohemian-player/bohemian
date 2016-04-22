@@ -4,10 +4,9 @@ import Mplayer from 'mplayer';
 import EventEmitter from 'events';
 import fsp from 'fs-promise';
 import glob from 'glob-promise';
-import path from 'path';
 
-const TMP_DIR = path.resolve(__dirname, '..', 'tmp');
-const TMP_BASE = path.resolve(TMP_DIR, 'tmptrack');
+const TMP_DIR = '.bohemian2/tmp';
+const TMP_BASE_NAME = 'track';
 const MAX_ATTEMPTS = 3;
 
 export default class Player extends EventEmitter {
@@ -18,6 +17,8 @@ export default class Player extends EventEmitter {
     this.player = new Mplayer();
     this.currentTime = 0;
     this.isReady = false;
+    this.tmpDir = [this.getUserHome(), TMP_DIR].join('/');
+    this.tmpFileBase = [this.tmpDir, TMP_BASE_NAME].join('/');
     this.registerListeners();
   }
 
@@ -64,8 +65,8 @@ export default class Player extends EventEmitter {
 
   playTrack(track, attemptNumber = 0) {
     return this.cleanup()
-      .then(() => fsp.ensureDir(TMP_DIR))
-      .then(() => this.client.downloadTrack(track, TMP_BASE))
+      .then(() => fsp.ensureDir(this.tmpDir))
+      .then(() => this.client.downloadTrack(track, this.tmpFileBase))
       .then((info) => this.waitUntilReady()
         .then(() => {
           this.player.openFile(info.file);
@@ -88,11 +89,15 @@ export default class Player extends EventEmitter {
 
   cleanup() {
     // Clean up known tmp tracks, and remove tmp dir only if empty
-    return glob(`${TMP_BASE}.*`)
+    return glob(`${this.tmpFileBase}.*`)
       .then((tracks) => Promise.all(tracks.map((t) => fsp.unlink(t))))
-      .then(() => fsp.rmdir(TMP_DIR))
+      .then(() => fsp.rmdir(this.tmpDir))
       .catch((error) => {
         if (error.code && ['ENOENT', 'ENOTEMPTY'].indexOf(error.code) < 0) throw error;
       });
+  }
+
+  getUserHome() {
+    return process.env.HOME || process.env.USERPROFILE;
   }
 }

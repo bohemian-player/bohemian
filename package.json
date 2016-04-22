@@ -1,6 +1,6 @@
 {
   "name": "bohemian",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A command-line interface for playing music from Rhapsody",
   "bin": "bin/bohemian.js",
   "main": "./lib/index.js",
@@ -14,6 +14,9 @@
     "mplayer": "^2.0.1",
     "node-fetch": "^1.5.1",
     "rtmpdump": "^0.1.1"
+  },
+  "engines" : {
+    "node" : ">=4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",

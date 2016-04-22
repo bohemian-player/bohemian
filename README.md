@@ -11,7 +11,7 @@ At the moment, Bohemian is mostly a "proof of concept" as it only implements a b
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) and [NPM](https://www.npmjs.com/)
+- [Node.js](https://nodejs.org/) (>= 4.0) and [NPM](https://www.npmjs.com/)
 - [RTMPDump](https://rtmpdump.mplayerhq.hu/)
 - [MPlayer](http://www.mplayerhq.hu/)
 
