@@ -4,23 +4,25 @@ Bohemian is a command-line interface for playing music from [Rhapsody](http://ww
 
 NOTE: To use this, **you must already be a Rhapsody subscriber** with full/unlimited access (currently known as the "[premier](http://www.rhapsody.com/pricing)" plan). This project does **not** allow you to do anything without a subscription account.
 
-It works by following the requests made by the Rhapsody web client, fetching tracks with RTMPDump and sending the output to MPlayer.
+It works by following the requests normally made by the Rhapsody web client, fetching tracks with RTMPDump and sending the output to MPlayer.
 
-At the moment, Bohemian is mostly a "proof of concept" as it only implements a basic interface to search for and play a single song. In the future, it may evolve into a more complete music player.
+At the moment, Bohemian is mostly a "proof of concept" as it only implements a basic interface to search for and play a single song at a time. In the future, it may evolve into a more complete music player.
 
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) (>= 4.0) and [NPM](https://www.npmjs.com/)
+- [Node.js](https://nodejs.org/) (>= 4.x) and [NPM](https://www.npmjs.com/)
 - [RTMPDump](https://rtmpdump.mplayerhq.hu/)
 - [MPlayer](http://www.mplayerhq.hu/)
 
 ## Installation
 
-1. Install the prerequisites. On OS X (with [Homebrew](http://brew.sh/)):
-  - `brew install node`
-  - `brew install mplayer`
-  - `brew install rtmpdump`
+1. Install the prerequisites:
+  -  For Mac OS X (with [Homebrew](http://brew.sh/)):
+     - `brew install node mplayer rtmpdump`
+  -  For Ubuntu/Debian Linux:
+   - [Install node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) (>= 4.x) - If you install the default node.js package provided by your distro, it's probably too old, so follow the directions [here](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) for a newer version.
+     - `apt-get install mplayer rtmpdump`
 2. Install Bohemian:
   - `npm install -g bohemian`
 
