@@ -17,16 +17,22 @@ At the moment, Bohemian is mostly a "proof of concept" as it only implements a b
 
 ## Installation
 
-1. Install the prerequisites:
-  -  For Mac OS X (with [Homebrew](http://brew.sh/)):
-    - `brew install node mplayer rtmpdump`
-  -  For Ubuntu/Debian Linux:
-    - [Install node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) (>= 4.x) - If you install the default node.js package provided by your distro, it's probably too old, so follow the directions [here](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) for a newer version.
-    - `apt-get install mplayer rtmpdump`
-2. Install Bohemian:
-  - `npm install -g bohemian`
+### 1. Install the prerequisites:
 
-### To install as a library:
+#### For Mac OS X (with [Homebrew](http://brew.sh/)):
+- `brew install node mplayer rtmpdump`
+
+#### For Ubuntu/Debian Linux:
+
+- [Install node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) (>= 4.x) - If you install the default node.js package provided by your distro, it's probably too old, so follow the directions [here](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) for a newer version.
+- `apt-get install mplayer rtmpdump`
+
+### 2. Install Bohemian:
+
+`npm install -g bohemian`
+
+
+## To install as a library:
 
 - `npm install bohemian --save`
 

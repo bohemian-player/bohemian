@@ -1,6 +1,6 @@
 {
   "name": "bohemian",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A command-line interface for playing music from Rhapsody",
   "bin": "bin/bohemian.js",
   "main": "./lib/index.js",
