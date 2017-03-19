@@ -12,12 +12,12 @@ const LOGIN_QUESTIONS = [
   {
     type: 'input',
     name: 'username',
-    message: 'Rhapsody username:',
+    message: 'Napster username:',
   },
   {
     type: 'password',
     name: 'password',
-    message: 'Rhapsody password:',
+    message: 'Napster password:',
   },
 ];
 

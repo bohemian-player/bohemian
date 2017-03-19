@@ -1,11 +1,11 @@
 'use strict';
 
 import commandLineArgs from 'command-line-args';
-import { RhapsodyClient, Player, UI } from './index';
+import { NapsterClient, Player, UI } from './index';
 
 const USAGE_INFO = {
   title: 'bohemian',
-  description: 'A command-line Rhapsody music player',
+  description: 'A command-line Napster music player',
   synopsis: [
     '$ bohemian -i  (interactive mode)',
     '$ bohemian -u <username> -p <password> <search terms>',
@@ -43,12 +43,12 @@ const ARGS = [
     name: 'username',
     alias: 'u',
     type: String,
-    description: 'Rhapsody username (defaults to saved credentials if not provided)',
+    description: 'Napster username (defaults to saved credentials if not provided)',
   }, {
     name: 'password',
     alias: 'p',
     type: String,
-    description: 'Rhapsody password (defaults to saved credentials if not provided)',
+    description: 'Napster password (defaults to saved credentials if not provided)',
   }, {
     name: 'help',
     alias: 'h',
@@ -82,7 +82,7 @@ module.exports = () => {
   const cli = commandLineArgs(ARGS);
 
   const options = cli.parse();
-  const client = new RhapsodyClient();
+  const client = new NapsterClient();
   const player = new Player(client);
   const ui = new UI(client, player);
 

@@ -12,18 +12,18 @@ const CATALOG = '101';
 const CATALOG_STRING = 'US';
 const LOCALE = 'en_US';
 const RHAPSODY_SERVER = 'https://direct.rhapsody.com';
-const JS_PATH = 'http://app.rhapsody.com/assets/webclient-cli.js';
-const SWF_URL = 'http://app.rhapsody.com/player/WebclientPlayer.swf';
-const SEARCH_URL = 'http://api.rhapsody.com/v1/search/typeahead';
+const JS_PATH = 'http://app.napster.com/assets/webclient-cli.js';
+const SWF_URL = 'http://app.napster.com/player/WebclientPlayer.swf';
+const SEARCH_URL = 'http://api.napster.com/v1/search/typeahead';
 const AUTH_URL = `${RHAPSODY_SERVER}/authserver/v3/useraccounts`;
 const PLAYBACK_URL = `${RHAPSODY_SERVER}/playbackserver/v1/users`;
 const ARTIST_TOP_URL = `${RHAPSODY_SERVER}/metadata/data/methods/getTopTracksForArtist.js`;
 const BASIC_AUTH_REGEX = /Authorization['"]?:\s*["'](Basic [^"']+)["']/;
-const NAPI_KEY_REGEX = /http:\/\/api\.rhapsody\.com[^\}]+NAPIKey["']?:\s*["']([^"']+)["']/;
+const NAPI_KEY_REGEX = /https:\/\/api\.napster\.com[^\}]+NAPIKey["']?:\s*["']([^"']+)["']/;
 const DEV_KEY_REGEX = /["']?devkey["']?:\s*["']([^"']+)["']/;
 const RDS_DEV_KEY_REGEX = /['"]x\-rds\-devkey['"]:\s*['"]([^'"]+)['"]/;
 
-export default class RhapsodyClient {
+export default class NapsterClient {
   constructor() {
     this.loggedIn = false;
   }

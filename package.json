@@ -1,7 +1,7 @@
 {
   "name": "bohemian",
-  "version": "0.0.8",
-  "description": "A command-line interface for playing music from Rhapsody",
+  "version": "0.1.0",
+  "description": "A command-line interface for playing music from Napster",
   "bin": "bin/bohemian.js",
   "main": "./lib/index.js",
   "dependencies": {
